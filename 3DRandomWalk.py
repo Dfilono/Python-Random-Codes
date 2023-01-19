@@ -5,6 +5,7 @@ Created on Thu Jan 19 13:26:04 2023
 @author: filon
 """
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import random
 
@@ -41,7 +42,7 @@ def randomwalk3D(n):
     return x, y, z
 
 x_data, y_data, z_data = randomwalk3D(1000)
-ax = plt.subplot(1, 1, 1, projection='3d')
+ax = plt.gca(projection='3d')
 ax.plot(x_data, y_data, z_data, alpha=0.9)
 ax.scatter(x_data[-1], y_data[-1], z_data[-1])
 plt.show()
