@@ -9,3 +9,10 @@ To use this interpreter, your `input` can be multidgit, and can contain spaces. 
 
 ## Calculator v3:
 To use this interpreter, your `input` can be multidigit, and can contain spaces. Addition `(+)`, subtraction `(-)`, multiplication `(*)`, and division `(/)` are supported. Parenthesis `()` are also supported, and PEMDAS will be followed during expressions.
+
+## IR_v1: 
+The intermediate representaton interpreter is a different way of writing an interpreter that will ultimately allow for more complex inputs. For now, it has the same functionality as \textbf{Calculator v3} with the addition of unary operators. The unary `+` and unary `-` operators operate on one operand only, and take priort over the binary operators. For example:
+
+```
++-3 if both operators are unary is equiblaent to +(-(3)) = -3
+```
