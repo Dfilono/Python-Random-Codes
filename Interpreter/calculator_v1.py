@@ -56,7 +56,7 @@ class Interpreter(object):
         # assign next token to self.current_token
         # otherwise raise exception
         
-        if self.current_token.ype == token_type:
+        if self.current_token.type == token_type:
             self.current_token = self.get_next_token()
         else:
             self.error()
@@ -86,7 +86,7 @@ def main():
             break
         if not text:
             continue
-        interp = Interpreter
+        interp = Interpreter(text)
         result = interp.expr()
         print(result)
 
