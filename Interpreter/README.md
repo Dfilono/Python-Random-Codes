@@ -6,3 +6,6 @@ To use this interpreter, your `input` must be single digits `0, 1, 2, 3, 4, 5, 6
 
 ## Calculator v2:
 To use this interpreter, your `input` can be multidgit, and can contain spaces. Both addition `(+)` and subtraction `(-)` are supported.
+
+## Calculator v3:
+To use this interpreter, your `input` can be multidigit, and can contain spaces. Addition `(+)`, subtraction `(-)`, multiplication `(*)`, and division `(/)` are supported. Parenthesis `()` are also supported, and PEMDAS will be followed during expressions.
