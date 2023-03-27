@@ -4,7 +4,7 @@ import time
 from settings import *
 from sprites import Player, Ball, Block, PowerUp, Projectile
 from surfacemaker import SurfaceMaker
-from random import choices, choice
+from random import choices, choice, randint
 from string import digits
 
 class Game:
@@ -35,6 +35,24 @@ class Game:
         self.projectile_surf = pg.image.load('../graphics/other/projectile.png').convert_alpha()
         self.can_shoot = True
         self.shoot_time = 0
+
+        # crt
+        self.crt = CRT()
+
+        # audio
+        self.laser_sound = pg.mixer.Sound('../audio/laser.wav')
+        self.laser_sound.set_volume(0.1)
+
+        self.powerup_sound = pg.mixer.Sound('../audio/powerup.wav')
+        self.powerup_sound.set_volume(0.1)
+
+        self.laserhit = pg.mixer.Sound('../audio/laser_hit.wav')
+        self.laserhit.set_volume(0.02)
+
+        self.music = pg.mixer.Sound('../audio/music.wav')
+        self.music.set_volume(0.1)
+        self.music.play(loops = -1)
+
 
     def create_powerup(self, pos):
         powerup_type = choice(POWERUPS)
@@ -79,8 +97,10 @@ class Game:
 
         for sprite in overlap_sprites:
             self.player.powerup(sprite.powerup_type)
+            self.powerup_sound.play()
 
     def create_projectile(self):
+        self.laser_sound.play()
         for projectile in self.player.laser_rects:
             Projectile(projectile.midtop - pg.math.Vector2(0, 30), self.projectile_surf, [self.all_sprites, self.projectile_spirtes])
 
@@ -96,7 +116,7 @@ class Game:
                 for sprite in overlap_sprites:
                     sprite.get_damage(1)
                 projectile.kill()
-
+                self.laserhit.play()
     def run(self):
         t = time.time()
 
@@ -135,7 +155,29 @@ class Game:
             self.all_sprites.draw(self.display_surface)
             self.display_lives()
 
+            # crt
+            self.crt.draw()
+
             pg.display.update()
+
+class CRT:
+    def __init__(self):
+        vig = pg.image.load('../graphics/other/tv.png').convert_alpha()
+        self.scaled_vig = pg.transform.scale(vig, (WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.display_surface = pg.display.get_surface()
+        self.create_lines()
+
+    def draw(self):
+        self.scaled_vig.set_alpha(randint(60, 70))
+        self.display_surface.blit(self.scaled_vig, (0, 0))
+
+    def create_lines(self):
+        line_height = 4
+        line_amount = WINDOW_HEIGHT // line_height
+
+        for line in range(line_amount):
+            y = line * line_height
+            pg.draw.line(self.scaled_vig, (20, 20, 20), (0, y), (WINDOW_WIDTH, y), 1)
 
 if __name__ == '__main__':
     game = Game()

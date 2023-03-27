@@ -103,6 +103,13 @@ class Ball(pg.sprite.Sprite):
         # active
         self.active = False
 
+        # audio
+        self.impact = pg.mixer.Sound('../audio/impact.wav')
+        self.impact.set_volume(0.1)
+
+        self.fail = pg.mixer.Sound('../audio/fail.wav')
+        self.fail.set_volume(0.1)
+
     def collision(self, direction):
         overlap_sprites = pg.sprite.spritecollide(self, self.blocks, False)
         
@@ -116,11 +123,13 @@ class Ball(pg.sprite.Sprite):
                         self.rect.right = sprite.rect.left - 1
                         self.pos.x = self.rect.x
                         self.direction.x *= -1
+                        self.impact.play()
 
                     if self.rect.left <= sprite.rect.right and self.old_rect.left >= sprite.old_rect.right:
                         self.rect.left = sprite.rect.right + 1
                         self.pos.x = self.rect.x
                         self.direction.x *= -1
+                        self.impact.play()
 
                     if getattr(sprite, 'health', None):
                         sprite.get_damage(1)
@@ -131,11 +140,13 @@ class Ball(pg.sprite.Sprite):
                         self.rect.bottom = sprite.rect.top - 1
                         self.pos.y = self.rect.y - 1
                         self.direction.y *= -1
+                        self.impact.play()
 
                     if self.rect.top <= sprite.rect.bottom and self.old_rect.top >= sprite.old_rect.bottom:
                         self.rect.top = sprite.rect.bottom + 1
                         self.pos.y = self.rect.y + 1
                         self.direction.y *= -1
+                        self.impact.play()
 
                     if getattr(sprite, 'health', None):
                         sprite.get_damage(1)
@@ -162,6 +173,7 @@ class Ball(pg.sprite.Sprite):
                 self.active = False
                 self.direction.y = -1
                 self.player.lives -= 1
+                self.fail.play()
 
     def update(self, dt):
         if self.active:
