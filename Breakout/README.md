@@ -12,7 +12,3 @@ Space - Shoot Ball/Laser
 Randomly generates five rows of blocks with health pools randomly chosen between 1 and 7. After a block is destoryed, there is a 30% chance for one of three powerups to spawn. Powerups include: extra life, speed boost, 10% player size increase, laser gun
 
 If the players runs out of lives, or kills all blocks, the game will automatically quit.
-
-## Features to Be Added
-- Audio
-- CRT TV Overlay
